@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <button id="open">Open Image</button>
+    <button id="trash">Move To Trash</button>
+    <script>
+        // Import shell module
+        const {shell}  = require('electron');
+
+        // Get buttons
+        openButton = document.getElementById('open');
+        trashButton = document.getElementById('trash');
+
+        // Click event handler
+        openButton.addEventListener('click', function (event) {
+            // Open item with shell module
+            shell.openItem('./img/keepcoding.png');
+        });
+
+        // Click event handler
+        trashButton.addEventListener('click', function (event) {
+            // Move item to trash
+            shell.moveItemToTrash('./img/keepcoding.png');
+        });
+    </script>
+</body>
+</html>

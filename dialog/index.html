@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <button id="btnp" class="btn btn-danger">Error Box</button>
+    <button id="dlg" class="btn btn-danger">Open Dialog</button>
+    <button id="msg" class="btn btn-danger">Message Box</button>
+    <script>
+        // Import remote module
+        const {remote}  = require('electron');
+
+        // Get buttons
+        dlgButton = document.getElementById('dlg');
+        btnpButton = document.getElementById('btnp');
+        msgButton = document.getElementById('msg');
+
+        // Click event handler
+        btnpButton.addEventListener('click', function (event) {
+            // Show an Error Box
+            remote.dialog.showErrorBox('Error', 'Ha ocurrido un error');
+        });
+
+        // Click event handler
+        dlgButton.addEventListener('click', function (event) {
+            // Show dialog for select files
+            remote.dialog.showOpenDialog(remote.browserWindow,
+                {title: 'My dialog', buttonLabel: 'Prueba', properties:['openFile', 'createDirectory'], message: 'Añade un archivo', filters: [{name: 'Images', extensions: ['jpg', 'png', 'gif']}]},
+                (filePath, bookmarks)=>{
+                console.log(filePath);
+                console.log(bookmarks);
+            });
+        });
+
+        // Click event handler
+        msgButton.addEventListener('click', function (event) {
+            // Show Message Box
+            remote.dialog.showMessageBox({type: 'info', buttons: ['Cancelar', 'Vale'], title: 'Message Box', message: "I'm a Message Box"},
+                (response, checkboxChecked)=>{
+                    console.log(response);
+                    console.log(checkboxChecked);
+                });
+        });
+    </script>
+</body>
+</html>

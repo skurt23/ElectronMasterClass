@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <button id="screenshot" class="btn btn-danger">Take screenshot</button>
+    <script>
+        // Import our modules
+        const {desktopCapturer, screen, shell}  = require('electron');
+        const fs = require('fs');
+        const os = require('os');
+        const path = require('path');
+
+        // Get reference to our button
+        screenshotButton = document.getElementById('screenshot');
+
+        // Screenshot button click event handler
+        screenshotButton.addEventListener('click', function (event) {
+            // Get display size
+            const thumb = determineScreenShot();
+
+            // Set options for desktopCapturer
+            let options = {types:['screen'], thumbnailSize: thumb};
+
+            // Take a screenshot
+            desktopCapturer.getSources(options, function (error, sources) {
+
+                // If error print it
+                if (error) return console.log(error);
+
+                // For each display
+                sources.forEach(function (src) {
+                    // If our display is entire screen or our main screen then save the screenshot
+                    if (src.name === 'Entire screen' || src.name === 'Screen 1'){
+                        const screenShtPath = path.join(os.tmpdir(), 'image.png');
+
+                        // Write image to file system
+                        fs.writeFile(screenShtPath, src.thumbnail.toPNG(), function (err) {
+                            // If error print it
+                            if (err) return console.log(err);
+
+                            // Open our image with shell module
+                            shell.openItem(screenShtPath)
+                        })
+                    }
+                })
+            })
+        });
+
+        // We need to get our display size
+        function determineScreenShot() {
+            const screenSize = screen.getPrimaryDisplay().workAreaSize;
+            const maxDim = Math.max(screenSize.width, screenSize.height);
+
+            return {
+                width: maxDim * window.devicePixelRatio,
+                height: maxDim * window.devicePixelRatio
+            }
+
+        }
+    </script>
+</body>
+</html>

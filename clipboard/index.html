@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <textarea id="output" class="form-control" placeholder="Paste here:" readonly></textarea>
+    <input type="text" class="form-control" id="input">
+    <button id="copy" class="btn btn-success">Copy</button>
+    <button id="paste" class="btn btn-danger">Paste</button>
+    <script>
+        // Import clipboard module
+        const {clipboard}  = require('electron');
+
+        // Get references to our elements
+        inputText = document.getElementById('input');
+        outputText = document.getElementById('output');
+        copyButton = document.getElementById('copy');
+        pasteButton = document.getElementById('paste');
+
+        // Copy button click event handler
+        copyButton.addEventListener('click', function (event) {
+            // Write our text to clipboard
+            clipboard.writeText(inputText.value);
+        });
+
+        // Paste button click event handler
+        pasteButton.addEventListener('click', function (event) {
+            // Read text from clipboard and show it
+            outputText.value = clipboard.readText()
+        })
+    </script>
+</body>
+</html>

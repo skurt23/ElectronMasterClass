@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <button id="notifier" class="btn btn-success">Node-Notifier</button>
+    <button id="notification" class="btn btn-danger">Notifications API</button>
+    <script>
+        // Import node-notifier module
+        const notifier = require('node-notifier');
+
+        // Get buttons
+        notifierButton = document.getElementById('notifier');
+        notificationButton = document.getElementById('notification');
+
+        // Click event handler
+        notificationButton.addEventListener('click', function (event) {
+
+            // Create notification
+            let not = new Notification('My App', {body: 'Keepcoding!'});
+
+            // Subscribe to click event
+             not.onclick = () => {
+                 console.log('clicker');
+            }
+        });
+
+        // Click event handler
+        notifierButton.addEventListener('click', function (event) {
+            // Create node-notifier notification
+            notifier.notify({
+                title: 'Hola',
+                message: 'Keepcoding!',
+                sound: true,
+                url: 'https://keepcoding.es'
+            });
+
+            // Subscribe to its click event
+            notifier.on('click', ()=>{
+                console.log('notifier')
+            })
+        })
+    </script>
+</body>
+</html>

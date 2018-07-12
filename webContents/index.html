@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <button id="btn" class="btn btn-danger">Load URL</button>
+    <button id="ntb" class="btn btn-danger">Load File</button>
+    <button id="title" class="btn btn-danger">Get Title</button>
+    <script>
+        // Import remote module and get our window web contents
+        const {remote}  = require('electron');
+        webContents = remote.getCurrentWindow().webContents;
+
+        // Get buttons
+        btn = document.getElementById('btn');
+        ntb = document.getElementById('ntb');
+        title = document.getElementById('title');
+
+        // Click event listener
+        btn.addEventListener('click', (event)=>{
+            // Load new URL
+            webContents.loadURL('https://keepcoding.es');
+        });
+
+        // Click event listener
+        ntb.addEventListener('click', (event)=>{
+            // Load new URL
+            webContents.loadURL('index.html');
+        });
+
+        // Click event listener
+        title.addEventListener('click', (event)=>{
+            console.log(webContents.getTitle());
+        });
+
+        // Devtools opened event handler
+        webContents.on('devtools-opened', (event)=>{
+            console.log('devtools!!')
+        })
+    </script>
+</body>
+</html>

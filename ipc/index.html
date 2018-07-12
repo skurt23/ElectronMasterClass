@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <button id="send" class="btn btn-success">Send to main process</button>
+    <script>
+        // Import ipc for renderer process
+        const {ipcRenderer} = require('electron');
+
+        // Get button
+        sendButton = document.getElementById('send');
+
+        // Click event handler
+        sendButton.addEventListener('click', function (event) {
+            // Send text with an event
+            ipcRenderer.send('send', 'Aviso al Main');
+
+            // Subscribe to an event
+            ipcRenderer.on('return', function (event, data) {
+                console.log(data)
+            })
+        });
+
+    </script>
+</body>
+</html>

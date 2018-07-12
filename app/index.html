@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+</head>
+<body>
+    <button id="navigate">KeepCoding</button>
+
+    <script>
+        // Import remote module
+        const {remote} = require('electron');
+
+        // Get reference to our button
+        let navigateButton = document.getElementById('navigate');
+
+        // Click button event handler
+        navigateButton.addEventListener('click', function(e) {
+            // Use remote module to get the current window and then load an URL
+            remote.getCurrentWindow().loadURL('https://keepcoding.es')
+        });
+    </script>
+</body>
+</html>

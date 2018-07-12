@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <button id="sudo" class="btn btn-danger">Sudo</button>
+    <script>
+        // Import sudo module
+        const sudo = require('sudo-prompt');
+
+        // Get button
+        sudoButton = document.getElementById('sudo');
+
+        // Click event handler
+        sudoButton.addEventListener('click', function (event) {
+            // Create our options
+            let options = {
+                name: 'My app', // Name
+                //icns: '/Applications/Electron.app/Contents/Resources/Electron.icns' - Icon
+            };
+
+            // Get sudo permissions
+            sudo.exec('echo Hello World', options, function (err, stdout, stderr) {
+                console.log(`stdout: ${stdout}`);
+            })
+        })
+    </script>
+</body>
+</html>

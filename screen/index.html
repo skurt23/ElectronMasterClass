@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <button id="btnp" class="btn btn-danger">Cursor Position</button>
+    <textarea class="form-control" id="position" readonly></textarea>
+    <script>
+        // Import screen module
+        const {screen}  = require('electron');
+
+        // Get buttons
+        positionButton = document.getElementById('btnp');
+        positionText = document.getElementById('position');
+
+        // Click event handler
+        positionButton.addEventListener('click', function (event) {
+            // Get cursor position
+            let {x,y} = screen.getCursorScreenPoint();
+            positionText.value = `X: ${x}, Y: ${y}`;
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <button id="menu">Change Menu</button>
+    <script>
+        // Import remote module and get Menu and MenuItem
+        const {remote} = require('electron');
+        const {Menu, MenuItem} = remote;
+
+        // Create our menu
+        const menu = new Menu();
+        // Append actions to our menu
+        menu.append(new MenuItem({label: 'MenuItem', click() { console.log('item clicked') }}));
+        menu.append(new MenuItem({type: 'separator'}));
+        menu.append(new MenuItem({label: 'MenuItem2', type: 'checkbox', checked: true}));
+
+        // Get button
+        menuButton = document.getElementById('menu');
+
+        // Click event handler
+        menuButton.addEventListener('click', (e) => {
+            // Show our menu
+            menu.popup({window: remote.getCurrentWindow()})
+        })
+    </script>
+</body>
+</html>
